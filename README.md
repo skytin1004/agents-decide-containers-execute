@@ -2,9 +2,9 @@
 
 A documentation-maintenance sample for **Agents Decide, Containers Execute**, presented by Minseok Song, Microsoft MVP.
 
-Ask an agent to check a documentation snapshot. It selects approved checks, and a container worker produces a report showing one broken link and one translated page that needs review.
+Ask an agent to check a documentation snapshot. It selects approved checks, a container worker produces the results, and a bounded publisher opens a GitHub Issue for the maintainer. The example finds one broken link and one translated page that needs review.
 
-**[Explore the sample documents](docs/demo-walkthrough.md)** · **[Read the actual Azure report](samples/azure-report/report.md)**
+**[Explore the sample documents](docs/demo-walkthrough.md)** · **[Run the Issue demo](docs/issue-demo.md)** · [Original saved Azure report](samples/azure-report/report.md)
 
 | Input | Recorded result |
 | --- | --- |
@@ -24,11 +24,17 @@ flowchart LR
     V --> Q[Storage Queue]
     Q --> J[Container Apps Job]
     J --> B[Blob report]
+    B --> P[Validated GitHub Actions publisher]
+    P --> I[GitHub Issue]
     A --> S[get_status tool]
     S --> B
 ```
 
 This integration uses custom application code. Foundry Routines do not directly configure a Container Apps Job in this example.
+
+The Issue demonstration starts with a manual GitHub Actions workflow dispatch. That workflow invokes the Routine, waits for a matching committed Azure report, then posts the findings using its short-lived `GITHUB_TOKEN`. Azure login uses OIDC. The agent and worker do not have GitHub write credentials. Running the Routine directly or using the optional viewer produces the Blob report; it does not independently start the Issue publisher.
+
+For the presentation, show **the source documents → the resulting GitHub Issue**. The Issue contains actionable findings and a collapsed execution-evidence section. Azure Portal, raw logs and the viewer are optional Q&A material.
 
 ## Optional execution viewer
 
@@ -67,7 +73,7 @@ Reports: `.artifacts/local/reports/docops-demo-001/report.json` and `report.md`.
 
 ## Deploy and run in Azure
 
-Follow [Azure setup](docs/azure-setup.md) for resources, identities, hosted-agent deployment, and a disabled Routine. The [presentation runbook](docs/demo-runbook.md) begins with the published documents and saved report. Provision and rehearse separately if you choose to add a live execution.
+Follow [Azure setup](docs/azure-setup.md) for resources, identities, hosted-agent deployment, and a disabled Routine. Then follow [Issue demo setup](docs/issue-demo.md) to configure the publisher. The [presentation runbook](docs/demo-runbook.md) begins with the published documents and resulting Issue. Opening a saved Issue does not invoke Azure again.
 
 - [Architecture and delivery semantics](docs/architecture.md)
 - [Verification record](docs/verification.md)
@@ -97,6 +103,8 @@ Follow [Azure setup](docs/azure-setup.md) for resources, identities, hosted-agen
 | `docops/azure_io.py`, `docops/azure_worker.py` | Azure transport and finite worker |
 | `agent/main.py` | Hosted agent, model client, and tools |
 | `routines/manage.py` | Create, dispatch, inspect, and delete Routine |
+| `docops/issue_publisher.py` | Validate the committed report and create or reuse a bounded Issue |
+| `.github/workflows/issue-demo.yml`, `scripts/issue_demo.py` | Explicitly start the Azure workflow and publish its result |
 | `infra/` | Bicep for Storage, ACR, identity, environment, and Job |
 | `scripts/` | Deployment and status commands |
 | `samples/` | Inputs and expected report |
