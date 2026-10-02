@@ -6,7 +6,8 @@ param(
     [Parameter(Mandatory)][string]$FoundryProjectResourceId,
     [Parameter(Mandatory)][string]$FoundryProjectEndpoint,
     [Parameter(Mandatory)][string]$StorageAccount,
-    [string]$Repository = "skytin1004/agents-decide-containers-execute"
+    [string]$Repository = "skytin1004/agents-decide-containers-execute",
+    [string]$OidcSubject = ""
 )
 $ErrorActionPreference = "Stop"
 function AzJson {
@@ -18,8 +19,20 @@ if ($FoundryProjectResourceId -notmatch "^/subscriptions/$([regex]::Escape($Subs
     throw "Expected a Foundry project ARM resource in the supplied subscription"
 }
 $foundryGroup = $Matches[1]
+if (-not $OidcSubject) {
+    $oidc = & gh api "repos/$Repository/actions/oidc/customization/sub" | ConvertFrom-Json
+    if ($LASTEXITCODE -ne 0 -or -not $oidc.use_default) {
+        throw "Inspect the repository OIDC configuration and supply its exact main-branch -OidcSubject"
+    }
+    $prefix = if ($oidc.sub_claim_prefix) { $oidc.sub_claim_prefix } else { "repo:$Repository" }
+    $OidcSubject = "${prefix}:ref:refs/heads/main"
+}
+$parts = $Repository.Split("/")
+if ($parts.Count -ne 2 -or $OidcSubject -notmatch "^repo:$([regex]::Escape($parts[0]))(@[0-9]+)?/$([regex]::Escape($parts[1]))(@[0-9]+)?:ref:refs/heads/main$") {
+    throw "OIDC subject must identify this exact repository and main branch"
+}
 $identity = AzJson identity create --resource-group $ResourceGroup --name docops-issue-demo
-$null = AzJson identity federated-credential create --resource-group $ResourceGroup --identity-name docops-issue-demo --name github-main --issuer https://token.actions.githubusercontent.com --subject "repo:${Repository}:ref:refs/heads/main" --audiences api://AzureADTokenExchange
+$null = AzJson identity federated-credential create --resource-group $ResourceGroup --identity-name docops-issue-demo --name github-main --issuer https://token.actions.githubusercontent.com --subject $OidcSubject --audiences api://AzureADTokenExchange
 $roleName = "DocOps issue demo Routine dispatcher"
 $role = @{
     Name = $roleName

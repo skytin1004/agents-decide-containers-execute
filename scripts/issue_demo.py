@@ -62,9 +62,16 @@ def collect(request):
         if mode == "publish-existing" and (state is None or state["status"] != "completed"):
             raise PublicationError("publish-existing requires an already completed matching request")
         if mode == "run" and (state is None or state["status"] != "completed"):
+            descriptions = {
+                "check_links": "check_links for broken internal documentation links",
+                "check_translation_drift": "check_translation_drift for translated pages whose source baseline changed",
+            }
+            scope = "both documentation checks" if len(request.actions) == 2 else "this documentation check"
             prompt = (f"request_id: {request.request_id}. Repository: docs-fixture-v1. "
-                      f"Run these documentation checks in one submission: {', '.join(request.actions)}. "
-                      "Submit exactly these approved actions. Do not change files or publish to GitHub.")
+                      f"Run {scope} in one submission: "
+                      + "; and ".join(descriptions[action] for action in request.actions)
+                      + f". The actions list must contain exactly {json.dumps(list(request.actions))}. "
+                      "Do not change files or publish to GitHub.")
             with AIProjectClient(endpoint=os.environ["FOUNDRY_PROJECT_ENDPOINT"], credential=credential) as project:
                 result = project.beta.routines.dispatch(
                     routine_name="docops-maintenance",
