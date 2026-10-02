@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "request_id": "docops-gh-37010261060",
+  "repository_id": "docs-fixture-v1",
+  "status": "completed",
+  "actions": [
+    "check_links",
+    "check_translation_drift"
+  ],
+  "findings": {
+    "check_links": [
+      {
+        "file": "docs/en/index.md",
+        "line": 6,
+        "target": "deploy.md",
+        "kind": "broken_internal_link"
+      }
+    ],
+    "check_translation_drift": [
+      {
+        "file": "docs/ko/setup.md",
+        "source": "docs/en/setup.md",
+        "kind": "source_changed"
+      }
+    ]
+  },
+  "finding_count": 2
+}

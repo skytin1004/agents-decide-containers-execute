@@ -1,6 +1,6 @@
 # Documentation checks that end in a GitHub Issue
 
-Show the [sample documents](demo-walkthrough.md), then the resulting Issue. The two findings make the outcome visible: a missing internal link and a translation baseline that needs review. The Issue has links to the relevant files at a specific commit and an expandable execution-evidence section.
+Show the [sample documents](demo-walkthrough.md), then [the resulting Issue](https://github.com/skytin1004/agents-decide-containers-execute/issues/1). The [saved evidence package](../samples/issue-demo/README.md) preserves the verified result. The two findings make the outcome visible: a missing internal link and a translation baseline that needs review. The Issue has links to the relevant files at a specific commit and an expandable execution-evidence section.
 
 ## What actually runs
 
@@ -25,7 +25,7 @@ First deploy the sample using [Azure setup](azure-setup.md). Sign in with `az lo
   -StorageAccount '<demo-storage-account>'
 ```
 
-The script creates a dedicated `docops-issue-demo` managed identity and a federated credential restricted to this repository’s `main` branch. It grants a custom role for Routine read/dispatch at the existing Foundry project and `Storage Blob Data Reader` at the `docops-results` container. It saves client, tenant, subscription, endpoint and account identifiers as GitHub repository variables. These identifiers are configuration; no Azure secret or personal GitHub token is uploaded. Allow time for Azure role propagation.
+The script creates a dedicated `docops-issue-demo` managed identity and a federated credential restricted to this repository’s `main` branch. It grants a custom role for Routine read/dispatch at the existing Foundry project and `Storage Blob Data Reader` at the `docops-results` container. It saves client, tenant, subscription, endpoint and account identifiers as GitHub repository variables. These identifiers are configuration; no Azure secret or personal GitHub token is uploaded. Allow time for Azure role propagation. The script reads the repository OIDC `sub_claim_prefix`, including immutable owner/repository IDs when enabled. For a customized subject, inspect it and supply the exact main-branch `-OidcSubject`; do not assume the legacy repository-name-only subject.
 
 The workflow grants `contents: read`, `id-token: write`, and `issues: write`. The agent and worker gain no GitHub permission. The Azure identity cannot modify the reports or queue work directly. Project-scoped Routine permissions cover that project’s Routines; application code selects the fixed `docops-maintenance` name. GitHub’s `issues: write` permission is broader than the publisher’s create-only implementation.
 
@@ -47,7 +47,7 @@ Present the documents, open the Issue, and point to its two findings. Expand **E
 
 ## Retry and recovery
 
-Use GitHub’s **Re-run jobs** for the same workflow run. Its request ID stays the same. A completed request is read without invoking the Routine again; an incomplete request can be resubmitted safely under the worker’s existing duplicate handling. A different action selection with the same ID fails validation.
+Use GitHub’s **Re-run jobs** for the same workflow run. Its request ID stays the same. A completed request is read without invoking the Routine again; an incomplete request can be resubmitted safely under the worker’s existing duplicate handling. A different action selection with the same ID fails validation. If the agent selected a different allowed action set than requested, the workflow stops without publishing. Inspect the result, clarify the request and use a new ID. Do not change recorded state to force publication.
 
 To publish a request already completed by the viewer or direct Routine dispatch:
 

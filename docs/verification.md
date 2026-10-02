@@ -57,6 +57,18 @@ All 32 checkout tests passed with the repository virtual environment: 20 core te
 
 The [saved Azure report](../samples/azure-report/README.md) for docops-live-20261002094646 was downloaded through authenticated read-only access. Its original JSON and Markdown bytes are included, with SHA-256 hashes and the Blob modification time. This retrieval did not dispatch a new execution. A Job execution ID was not captured for this request. The September 30 request-linked worker log above remains a separate record.
 
+## October 2 Issue publication and retry
+
+The [Documentation check to Issue workflow](https://github.com/skytin1004/agents-decide-containers-execute/actions/runs/37010261060) succeeded at commit `8c4336899f11d306c1b80dfb8f6b95b6065084ed`. It manually dispatched the disabled Routine for `docops-gh-37010261060`, read the committed Azure result, validated both actions and fixture findings, and created [Issue #1](https://github.com/skytin1004/agents-decide-containers-execute/issues/1) as `github-actions[bot]`. The Issue records a missing internal link and a source-baseline review. [Saved evidence](../samples/issue-demo/README.md) includes raw report/state bytes and publication receipts.
+
+Attempt 2 reused the same completed request and Issue without dispatching new work. The earlier `docops-gh-37009599145` request selected only the link check. Exact action matching rejected publication and created no Issue. The stored result was preserved, the prompt clarified, and a new ID used. The underlying model-selection cause is unconfirmed.
+
+The publisher has a fixed repository destination, validates the report before writing, and uses the workflow's temporary GitHub token. The agent and Azure worker have no GitHub write token. Azure login uses an OIDC federation and a dedicated identity restricted to Routine dispatch/read and result-container read access. Publication is a separate completion step from the worker's Blob commit.
+
+All 44 tests passed locally. [CI run 37010257302](https://github.com/skytin1004/agents-decide-containers-execute/actions/runs/37010257302) passed all 44 tests in each Windows/Ubuntu and Python 3.11/3.13 combination. Twelve publisher tests supplement the 32 core/viewer tests. These automated tests do not call Azure. The live workflow observations above are separate evidence.
+
+The latest Issue report does not include a captured Job execution ID or model reasoning trace. Fixture consistency validation is not an independent attestation of the deployed worker image. The schedule remains disabled. Neither unattended GitHub monitoring nor translation generation was added.
+
 ## Not established by this validation
 
 - Production throughput, load, cost, or availability targets.

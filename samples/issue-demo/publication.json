@@ -1,0 +1,11 @@
+{
+  "request_id": "docops-gh-37010261060",
+  "request_digest": "e044c6fea80abe6318dbbfe9348bf6c67b22257b0382086506c8357c00cbf9bb",
+  "report_sha256": "8b26a09ee1b62a705b9d120e26456a77562f73d52476ebbad4bbad0aec215c24",
+  "source_commit": "8c4336899f11d306c1b80dfb8f6b95b6065084ed",
+  "workflow_url": "https://github.com/skytin1004/agents-decide-containers-execute/actions/runs/37010261060",
+  "status": "created",
+  "issue_number": 1,
+  "issue_url": "https://github.com/skytin1004/agents-decide-containers-execute/issues/1",
+  "published_at": "2026-10-02T13:02:43.866572+00:00"
+}

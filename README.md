@@ -4,14 +4,14 @@ A documentation-maintenance sample for **Agents Decide, Containers Execute**, pr
 
 Ask an agent to check a documentation snapshot. It selects approved checks, a container worker produces the results, and a bounded publisher opens a GitHub Issue for the maintainer. The example finds one broken link and one translated page that needs review.
 
-**[Explore the sample documents](docs/demo-walkthrough.md)** · **[Run the Issue demo](docs/issue-demo.md)** · [Original saved Azure report](samples/azure-report/report.md)
+**[Explore the sample documents](docs/demo-walkthrough.md)** · **[See the resulting Issue](https://github.com/skytin1004/agents-decide-containers-execute/issues/1)** · [Run the Issue demo](docs/issue-demo.md) · [Original saved Azure report](samples/azure-report/report.md)
 
 | Input | Recorded result |
 | --- | --- |
 | [English index](docops/fixture/docs/en/index.md) links to a missing deployment guide | One broken internal link |
 | [English setup guide](docops/fixture/docs/en/setup.md) has changed since the [Korean guide](docops/fixture/docs/ko/setup.md)'s recorded baseline | One translation review signal |
 
-The linked report was downloaded from Azure Blob Storage after an actual execution. It is saved evidence, not a new live run. [Report origin and hashes](samples/azure-report/README.md) explain what was captured.
+Issue #1 was created from an actual Azure execution on October 2, 2026. It contains two findings and links to the checked files. [Saved execution and publication evidence](samples/issue-demo/README.md) includes an offline Issue copy and the original report bytes. Viewing the Issue does not start another execution.
 
 ## How it works
 

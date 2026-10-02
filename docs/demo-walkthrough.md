@@ -1,6 +1,6 @@
-# Sample documents and the Azure report
+# Sample documents and the resulting GitHub Issue
 
-This walkthrough takes about three minutes. You can inspect the inputs and a saved result without an Azure subscription. The report is a copy downloaded from Azure Blob Storage after an actual execution; opening this page does not run the agent again.
+This walkthrough takes about three minutes. You can inspect the inputs and a saved result without an Azure subscription. The Issue was created from a verified Azure report. Opening these pages does not run the agent again.
 
 ## 1. The request
 
@@ -32,18 +32,20 @@ Compare the [English setup guide](../docops/fixture/docs/en/setup.md) with the [
 
 That difference makes the example easy to see. The actual check compares the normalized source hash with the baseline recorded for the translation. A mismatch means **review needed**. The worker does not judge translation quality or use a model to identify missing sentences.
 
-## 3. The actual saved result
+## 3. The resulting Issue
 
-**[Open the Azure report](../samples/azure-report/report.md)** · [Raw JSON](../samples/azure-report/report.json) · [Origin and file hashes](../samples/azure-report/README.md)
+**[Open the Issue on GitHub](https://github.com/skytin1004/agents-decide-containers-execute/issues/1)** · [Offline copy](../samples/issue-demo/issue.md) · [Execution evidence](../samples/issue-demo/README.md)
 
-Request `docops-live-20261002094646` completed with two findings:
+Request `docops-gh-37010261060` produced Issue #1, **Documentation check: 2 items need attention**, on October 2, 2026.
 
-| Finding | Evidence in the report |
+| Finding | What the maintainer can do |
 | --- | --- |
-| Broken internal link | `docs/en/index.md:6` points to missing `deploy.md` |
-| Translation needs review | `docs/ko/setup.md` records an older baseline for `docs/en/setup.md` |
+| `docs/en/index.md:6` points to missing `deploy.md` | Fix the link or add the intended document |
+| `docs/ko/setup.md` has an older baseline for `docs/en/setup.md` | Review the translated page and update its baseline after review |
 
-The report identifies the request, repository, selected actions and individual findings. It contains the worker's check results. This exported report does not include a model reasoning trace or this request's Job execution ID.
+The Issue links to the exact source commit and provides review checkboxes. Its **Execution evidence** section is collapsed so that the findings remain the focus. Expand it to inspect the request, report hash and workflow.
+
+The agent selected checks. The worker produced the report. A GitHub Actions publisher validated the committed report and created this Issue. Source files remain unchanged.
 
 ## 4. How the responsibilities connect
 
@@ -55,6 +57,7 @@ The report identifies the request, repository, selected actions and individual f
 | Azure Queue Storage | Carries the validated request |
 | Azure Container Apps Job | Runs the deterministic checks in a finite worker execution |
 | Azure Blob Storage | Stores the request state and generated report |
+| GitHub Actions publisher | Verifies the committed result and creates or reuses an Issue |
 
 The approved source and actions come from the application contract. Running code in a container alone does not establish those boundaries.
 
@@ -69,4 +72,4 @@ python -m docops.cli demo
 
 Open `.artifacts/local/reports/docops-demo-001/report.md`. This local rehearsal uses scripted action selection, SQLite and a real local Python worker. It does not call a model or Azure. See [Azure setup](azure-setup.md) to deploy the hosted agent and cloud worker.
 
-The sample produces a report. It does not monitor GitHub changes, translate documents, edit the repository or open a pull request.
+The local command produces a report. Follow [Issue demo setup](issue-demo.md) to run the Azure-to-Issue workflow. It does not monitor GitHub changes, translate documents, edit source or open a pull request.
