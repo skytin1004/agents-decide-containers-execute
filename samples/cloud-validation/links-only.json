@@ -1,0 +1,24 @@
+{
+  "request_id": "docops-links-001",
+  "status": "completed",
+  "report": {
+    "schema_version": 1,
+    "request_id": "docops-links-001",
+    "repository_id": "docs-fixture-v1",
+    "status": "completed",
+    "actions": [
+      "check_links"
+    ],
+    "findings": {
+      "check_links": [
+        {
+          "file": "docs/en/index.md",
+          "line": 6,
+          "target": "deploy.md",
+          "kind": "broken_internal_link"
+        }
+      ]
+    },
+    "finding_count": 1
+  }
+}

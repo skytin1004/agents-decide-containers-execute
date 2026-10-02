@@ -1,0 +1,3 @@
+# Preserve the downloaded Azure report bytes across platforms.
+samples/azure-report/report.json -text
+samples/azure-report/report.md -text

@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "foundry-docops-jobs"
+version = "0.1.0"
+description = "A bounded documentation maintenance agent and Azure Container Apps Job sample"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [{name = "Minseok Song"}]
+dependencies = []
+
+[project.scripts]
+docops = "docops.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["docops*"]
+
+[tool.setuptools.package-data]
+docops = ["fixture/**/*", "fixture/*.json"]

@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "request_id": "docops-invalid-001",
+  "repository_id": "docs-fixture-v1",
+  "actions": ["run_shell"]
+}

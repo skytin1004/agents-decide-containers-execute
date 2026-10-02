@@ -1,0 +1,11 @@
+{
+  "validated_on": "2026-09-30",
+  "response_id": "caresp_01542cb67d08168500UVymygztsy4o8DkMc9IBbol8J2ztfCBD",
+  "tool_calls": [],
+  "model_response": {
+    "request_id": "docops-greeting-002",
+    "actions": [],
+    "status": "no_action"
+  },
+  "request_storage_status": "not_found"
+}

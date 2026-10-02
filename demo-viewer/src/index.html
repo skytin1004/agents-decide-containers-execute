@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Execution evidence · Agents Decide, Containers Execute</title>
+  <link rel="icon" href="assets/microsoft-foundry.svg"><link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main class="shell">
+  <header class="topbar">
+    <div class="brand"><img src="assets/microsoft-foundry.svg" alt=""><div><h1>Execution evidence</h1><p>Agents decide. Containers execute.</p></div></div>
+    <div class="toolbar"><div class="mode-switch" role="group" aria-label="Evidence mode"><button data-mode="replay" aria-pressed="true">Recorded Azure</button><button data-mode="local" aria-pressed="false">Local execution</button><button data-mode="azure" aria-pressed="false">Azure Live</button></div><button id="run-button" class="primary">Load recording</button></div>
+  </header>
+  <div class="mode-banner"><div><span id="mode-label" class="eyebrow">RECORDED AZURE EVIDENCE</span><span id="mode-description">Saved September 30, 2026. Loading does not start a new Azure execution.</span></div><span id="run-state" class="run-state" role="status">Ready</span></div>
+  <div class="workspace">
+    <section class="canvas" aria-labelledby="flow-title">
+      <div class="heading"><h2 id="flow-title">How the agentic workload runs</h2><p>The Routine decides <strong>when</strong>. The agent chooses <strong>what</strong>. The container executes <strong>within bounds</strong>.</p></div>
+      <div class="flow" id="flow">
+        <svg id="connectors" aria-hidden="true"><defs><marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#839bb7"/></marker></defs><g id="paths"></g></svg>
+        <button class="stage" data-stage="routine" aria-pressed="true"><span class="stage-top"><img src="assets/microsoft-foundry.svg" alt=""><span class="step">01</span></span><span class="stage-name">Microsoft Foundry Routine</span><span class="role">When to start</span><span class="badge" data-status>Not observed</span></button>
+        <button class="stage" data-stage="agent" aria-pressed="false"><span class="stage-top"><img src="assets/foundry-agent-service.svg" alt=""><span class="step">02</span></span><span class="stage-name">Foundry hosted agent</span><span class="role">Which approved checks</span><span class="badge" data-status>Not observed</span></button>
+        <button class="stage" data-stage="validation" aria-pressed="false"><span class="stage-top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3 20 6v5c0 5-3.3 8.2-8 10-4.7-1.8-8-5-8-10V6l8-3Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg><span class="step">03</span></span><span class="stage-name">Python request validation</span><span class="role">Enforce the boundaries</span><span class="badge" data-status>Not observed</span></button>
+        <button class="stage" data-stage="queue" aria-pressed="false"><span class="stage-top"><img src="assets/storage-queue.svg" alt=""><span class="step">04</span></span><span class="stage-name">Azure Queue Storage</span><span class="role">Durable handoff</span><span class="badge" data-status>Not observed</span></button>
+        <button class="stage" data-stage="job" aria-pressed="false"><span class="stage-top"><img src="assets/container-apps-worker.svg" alt=""><span class="step">05</span></span><span class="stage-name">Azure Container Apps Job</span><span class="role">One bounded execution</span><span class="badge" data-status>Not observed</span></button>
+        <button class="stage" data-stage="report" aria-pressed="false"><span class="stage-top"><img src="assets/blob-block.svg" alt=""><span class="step">06</span></span><span class="stage-name">Azure Blob Storage</span><span class="role">Commit the result</span><span class="badge" data-status>Not observed</span></button>
+      </div>
+      <div class="legend"><span><i class="observed"></i>Observed / recorded</span><span><i class="inferred"></i>Inferred from result</span><span><i class="unknown"></i>Unverified / local simulation</span></div>
+      <section class="inspector" aria-labelledby="inspector-title"><div class="inspector-head"><span class="eyebrow">INSPECT THE EVIDENCE</span><div class="step-nav"><button id="previous" aria-label="Previous stage">←</button><button id="next" aria-label="Next stage">→</button></div></div><h3 id="inspector-title">Microsoft Foundry Routine</h3><p id="stage-detail">Select a mode and load evidence. Click any stage to explain it at your own pace.</p><div class="source-row"><span id="stage-source">Source: none yet</span><time id="stage-time"></time></div><div class="event-preview"><span id="event-preview">Events stay available after execution completes.</span><button id="show-events" class="text-button" disabled>View all events</button></div></section>
+    </section>
+    <aside class="side-panel" aria-label="Request and result">
+      <section class="panel-section request-section"><div class="section-top"><h3>Current request</h3><span id="duration"></span></div><p id="request-id" class="mono request-id">No request loaded</p><p id="request-context" class="muted">Inspect one request from start to result.</p></section>
+      <section class="panel-section"><h3>Requested checks</h3><div id="decisions" class="decisions"><p class="muted">Actions appear when evidence is available.</p></div><p id="decision-note" class="small muted"></p></section>
+      <section class="panel-section result-section"><div class="section-top"><h3>Committed result</h3><span id="finding-count" class="count" hidden></span></div><div id="result"><p class="muted">Completion requires a stored report for this request.</p></div><div class="report-actions"><button id="open-report" class="secondary" disabled>Open report</button><button id="raw-json" class="text-button" disabled>Raw JSON ↗</button></div><div class="azure-source"><a id="open-azure" class="secondary azure-link" target="_blank" rel="noopener noreferrer" aria-disabled="true" aria-describedby="azure-source-note">Open in Azure <span aria-hidden="true">↗</span></a><p id="azure-source-note" class="small muted">Available after an Azure report is verified.</p><p id="azure-report-path" class="small mono" hidden></p></div></section>
+      <section class="panel-section receipt"><div class="section-top"><h3>Evidence receipt</h3><button id="show-receipt" class="text-button" disabled>Details ↗</button></div><dl id="receipt"><dt>Source</dt><dd>Not loaded</dd><dt>Worker</dt><dd>Not observed</dd><dt>Report</dt><dd>Not observed</dd></dl></section>
+      <div id="error-panel" class="error-panel" role="alert" hidden><strong id="error-title">Observation unavailable</strong><p id="error-message"></p><p id="error-recovery"></p><button id="retry-observation" class="secondary" hidden>Retry same observation</button></div>
+      <form id="lookup-form" class="lookup" hidden><label for="lookup-id">Check an existing Azure request</label><div><input id="lookup-id" placeholder="docops-live-…" required pattern="docops-[a-z0-9][a-z0-9-]{0,55}" autocomplete="off"><button id="lookup-button" class="secondary" type="submit">Check</button></div><p class="small muted">Reads stored evidence. Does not dispatch new work.</p></form>
+      <div class="history"><label for="recent-runs">Saved observations</label><select id="recent-runs"><option value="">Choose a previous observation</option></select></div>
+    </aside>
+  </div>
+  <footer><span>One request. A bounded worker. A verifiable report.</span><span>Click a stage to inspect · no timed playback</span></footer>
+</main>
+<dialog id="dialog" aria-labelledby="dialog-title"><div class="dialog-head"><h2 id="dialog-title">Evidence</h2><button id="close-dialog" aria-label="Close dialog">×</button></div><div id="dialog-body"></div></dialog>
+<script type="module" src="app.js"></script>
+</body>
+</html>

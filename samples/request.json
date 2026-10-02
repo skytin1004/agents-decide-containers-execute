@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "request_id": "docops-demo-001",
+  "repository_id": "docs-fixture-v1",
+  "actions": ["check_links", "check_translation_drift"]
+}

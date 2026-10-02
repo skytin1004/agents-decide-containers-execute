@@ -1,0 +1,14 @@
+{
+  "translations": [
+    {
+      "source": "docs/en/index.md",
+      "translation": "docs/ko/index.md",
+      "source_sha256": "5bcb3dee87fbd62415fea162d6fa793f67a5676e9c27056a9c9d912cc9859b6d"
+    },
+    {
+      "source": "docs/en/setup.md",
+      "translation": "docs/ko/setup.md",
+      "source_sha256": "639e5994805978f73f60525420b2a3349484f13c2ed8f60ddc9808cc9bfc5dc3"
+    }
+  ]
+}

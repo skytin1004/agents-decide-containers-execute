@@ -1,0 +1,22 @@
+{
+  "execution": "docops-worker-k2r6j",
+  "source": "Observed Azure Container Apps Job console log; connection messages omitted",
+  "events": [
+    {
+      "timestamp": "2026-09-30T12:40:54.1849893+00:00",
+      "event": "started",
+      "request_id": "docops-both-001",
+      "actions": [
+        "check_links",
+        "check_translation_drift"
+      ],
+      "attempt": 1
+    },
+    {
+      "timestamp": "2026-09-30T12:40:54.2373999+00:00",
+      "event": "completed",
+      "request_id": "docops-both-001",
+      "finding_count": 2
+    }
+  ]
+}

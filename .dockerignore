@@ -1,0 +1,7 @@
+**
+!Dockerfile
+!requirements-worker.txt
+!pyproject.toml
+!docops/**
+**/__pycache__/**
+**/*.pyc

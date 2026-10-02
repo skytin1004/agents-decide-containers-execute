@@ -1,0 +1,21 @@
+{
+  "validated_on": "2026-09-30",
+  "response_id": "caresp_0a7fc64d50d9a14300OwyP2GSeNMFCTMo6tfSOHdPN5Pu8VIa6",
+  "tool_name": "submit_checks",
+  "arguments": {
+    "request_id": "docops-both-001",
+    "actions": [
+      "check_links",
+      "check_translation_drift"
+    ]
+  },
+  "tool_result": {
+    "request_id": "docops-both-001",
+    "status": "duplicate",
+    "existing_status": "completed",
+    "actions": [
+      "check_links",
+      "check_translation_drift"
+    ]
+  }
+}

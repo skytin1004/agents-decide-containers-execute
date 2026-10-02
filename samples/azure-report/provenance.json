@@ -1,0 +1,25 @@
+{
+  "source": "Azure Blob Storage; authenticated read-only download",
+  "retrieved_on": "2026-10-02",
+  "blob_last_modified_utc": "2026-10-02T09:47:31+00:00",
+  "request_id": "docops-live-20261002094646",
+  "repository_id": "docs-fixture-v1",
+  "blob_relative_directory": "reports/docops-live-20261002094646/",
+  "files": {
+    "report.json": {
+      "sha256": "6e9f1ca4c1d33afe83a5e143aa9c09e176796371e0e1367006f028154a0b1ec0",
+      "bytes": 578
+    },
+    "report.md": {
+      "sha256": "766880f7263d8ceae53dc7b403842ad017d60b27bbb062f5f54d031e078796bc",
+      "bytes": 450
+    }
+  },
+  "job_execution_id": null,
+  "notes": [
+    "Report files preserve the downloaded bytes.",
+    "Account, subscription and credentials are omitted.",
+    "This export contains no model trace or request-linked Job execution ID.",
+    "Retrieval did not dispatch a new Azure execution."
+  ]
+}
